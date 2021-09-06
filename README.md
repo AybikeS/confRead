@@ -1,1 +1,1 @@
-# yapilandirma_read
+# Configuration Read
