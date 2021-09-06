@@ -9,7 +9,7 @@ all: confRead.so
 confRead.so: confRead.o
 	$(CC) $(CFLAGS) $(LDFLAGS) -shared confRead.o -o libconfRead.so
 
-confRead.o: src/confReadconfRead.c src/confRead.h
+confRead.o: src/confRead.c src/confRead.h
 	$(CC) $(CFLAGS) -c src/confRead.c -o confRead.o
 
 
