@@ -4,7 +4,6 @@ CC = gcc
 CFLAGS = -Wall -Wextra -O3 -fPIC
 LDFLAGS = -lm
 
-
 all: yapilandirma_okuyucu.so test.out
 
 yapilandirma_okuyucu.so: yapilandirma_okuyucu.o
