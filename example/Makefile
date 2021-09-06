@@ -2,13 +2,13 @@ CC = gcc
 CFLAGS = -Wall
 LDFLAGS = -lm
 
-all: test.out
+all: usage_example_lib.out
 
-test.out: test.o
-	$(CC) $(CFLAGS) -o test.out test.o -lconfRead $(LDFLAGS)
+usage_example_lib.out: usage_example_lib.o
+	$(CC) $(CFLAGS) -o usage_example_lib.out usage_example_lib.o -lconfRead $(LDFLAGS)
 
-test.o: test.c
-	$(CC) $(CFLAGS) -o test.o -c test.c
+usage_example_lib.o: usage_example_lib.c
+	$(CC) $(CFLAGS) -o usage_example_lib.o -c usage_example_lib.c
 
 clean:
 	rm -f *.o *.out
