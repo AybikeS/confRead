@@ -10,7 +10,7 @@ main(int argc, char **argv)
 	int debug;
 	char* IP;
 	char* password;
-    struct data_holder* data_in_file_ptr = NULL;
+	struct data_holder* data_in_file_ptr = NULL;
 	int data_holder_size = 0;
 
 	takeFileContent(argv[1], &data_in_file_ptr, &data_holder_size);

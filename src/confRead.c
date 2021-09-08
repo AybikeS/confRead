@@ -30,14 +30,31 @@ printFileContent(const char* file_name)
 	return 0;
 }
 
+char* clean_string(char* str) {
+	char* clean_str = "";
+	int str_length = strlen(str);
+
+	for(int i = 0; i < str_length; i++){
+		if(str[i] == ' ') strcat(clean_str, &str[i]);
+	}
+	return clean_str;
+
+}
+
 static int
 takeVariableFromLine(char *str, char *name, char *data)
 {
-	char* line = strtok(str, "=");
+	char* line = strtok(str, "\n");
+	char* name_and_data = strtok(line, "=");
 
-	strcpy(name, line);
-	line = strtok(NULL, "\n");
-	strcpy(data, line);;
+	if(strcmp(line, name_and_data) == 0) 
+	{
+		return -1;
+	}
+	
+	strcpy(name, clean_string(name_and_data));
+	line = strtok(NULL, "");
+	strcpy(data, clean_string(name_and_data));
 	return 0;
 }
 
@@ -58,17 +75,23 @@ takeFileContent(const char* file_name, struct data_holder** data_in_file_ptr, in
 	{
                 while(fgets(line, sizeof(line), config) != NULL)
 		{
-			
-			*data_in_file_ptr = realloc(*data_in_file_ptr, (data_index+1) * sizeof(struct data_holder));	
-			takeVariableFromLine(line,name,data);
-			
-			struct data_holder* temp_ptr = *data_in_file_ptr + data_index;
 
-			strcpy(temp_ptr->name,name);
-			strcpy(temp_ptr->data,data);
-			
-			data_index++;	
-			printf("%d\n", data_index);
+			if(takeVariableFromLine(line, name, data) == 0) 
+			{
+				*data_in_file_ptr = realloc(*data_in_file_ptr, (data_index+1) * sizeof(struct data_holder));	
+				
+				struct data_holder* temp_ptr = *data_in_file_ptr + data_index;
+	
+				strcpy(temp_ptr->name,name);
+				strcpy(temp_ptr->data,data);
+					
+			} 
+			else 
+			{
+				printf("Error: could not read line %d.", data_index);
+			}
+
+			data_index++;
 		}
 
 		*data_holder_size = data_index;
@@ -117,3 +140,7 @@ dataAsFloat(const char* data_name, const struct data_holder* data_in_file_ptr, i
 	}
 	return -1.0;
 }
+
+
+
+
