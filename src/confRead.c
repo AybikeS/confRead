@@ -35,7 +35,7 @@ char* clean_string(char* str) {
 	int str_length = strlen(str);
 
 	for(int i = 0; i < str_length; i++){
-		if(str[i] == ' ') strcat(clean_str, &str[i]);
+		if(str[i] != ' ') strcat(clean_str, &str[i]);
 	}
 	return clean_str;
 
