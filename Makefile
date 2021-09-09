@@ -21,7 +21,7 @@ install: uninstall
 
 	@rm -f libconfRead.pc
 	@echo "Name: libconfRead" >> libconfRead.pc
-	@echo "Description: stj2021" >> libconfRead.pc
+	@echo "Description: This is a library developed by Narin Yaren Coşkun, Efe Yılmaz, Aybike Sena Şahin and Ali Yiğit Ergen during their internship at Ford Otosan." >> libconfRead.pc
 	@echo "Version: $(Version)" >> libconfRead.pc
 	@echo "Libs: -L$(Prefix)/lib -lconfRead" >> libconfRead.pc
 	@echo "Cflags: -I$(Prefix)/include" >> libconfRead.pc

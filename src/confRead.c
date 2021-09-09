@@ -31,12 +31,30 @@ printFileContent(const char* file_name)
 }
 
 char* clean_string(char* str) {
-	char* clean_str = "";
-	int str_length = strlen(str);
+	
+	char buffer[1024];
+	int buffer_index = 0;
+	int i = 0;
+	
+	while(1) {
+		
+		if(str[i] == ' ' || str[i] == '\0') {
+			i++;
+			continue;
+		}
+		else if(str[i] == '\n') {
+			break;
+		}
+		else {
+			buffer[buffer_index] = str[i];
+			buffer_index++;
+			i++;
+		}
 
-	for(int i = 0; i < str_length; i++){
-		if(str[i] != ' ') strcat(clean_str, &str[i]);
 	}
+
+	char* clean_str = malloc(buffer_index * sizeof(char));
+	strcpy(clean_str, buffer);
 	return clean_str;
 
 }
@@ -44,18 +62,31 @@ char* clean_string(char* str) {
 static int
 takeVariableFromLine(char *str, char *name, char *data)
 {
-	char* line = strtok(str, "\n");
-	char* name_and_data = strtok(line, "=");
+	//char temp[1024];
 
-	if(strcmp(line, name_and_data) == 0) 
+	char* line = clean_string(str);
+	
+	//strcpy(temp, line);
+
+	char* equals_ptr = strchr(line, '=');
+
+	if(equals_ptr != NULL && strchr(equals_ptr+1, '=') == NULL) 
+	{
+		char* name_data_pair = strtok(line, "=");
+		strcpy(name, name_data_pair);
+		
+		name_data_pair = strtok(NULL, "");
+		strcpy(data, name_data_pair);
+	} 
+	else 
 	{
 		return -1;
 	}
 	
-	strcpy(name, clean_string(name_and_data));
-	line = strtok(NULL, "");
-	strcpy(data, clean_string(name_and_data));
+	free(line);
+
 	return 0;
+
 }
 
 
@@ -138,7 +169,7 @@ dataAsFloat(const char* data_name, const struct data_holder* data_in_file_ptr, i
 	        	return atof(data_in_file_ptr[i].data);
 		}
 	}
-	return -1.0;
+	return -1;
 }
 
 
