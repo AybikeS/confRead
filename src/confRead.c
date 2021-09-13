@@ -106,8 +106,10 @@ takeFileContent(const char* file_name, struct data_holder** data_in_file_ptr, in
 	{
                 while(fgets(line, sizeof(line), config) != NULL)
 		{
-
-			if(takeVariableFromLine(line, name, data) == 0) 
+			if (line[0] == '#') {
+				continue;
+			}
+			else if(takeVariableFromLine(line, name, data) == 0) 
 			{
 				*data_in_file_ptr = realloc(*data_in_file_ptr, (data_index+1) * sizeof(struct data_holder));	
 				
