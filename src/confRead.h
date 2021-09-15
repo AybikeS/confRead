@@ -1,6 +1,12 @@
 #ifndef CONFIGURATION_READER_H
 #define CONFIGURATION_READER_H
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+
 /**
  * struct data_holder - indicates variable names and values
  *
@@ -9,8 +15,8 @@
  */
 struct data_holder
 {
-	char name[128];
-	char data[128];
+	char name[512];
+	char data[512];
 };
 
 
@@ -39,5 +45,9 @@ char* dataAsStr(const char* data_name, const struct data_holder* data_in_file_pt
  * dataAsFloat - converts given data type to float
  */
 float dataAsFloat(const char* data_name, const struct data_holder* data_in_file_ptr, int data_holder_size);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

@@ -30,7 +30,7 @@ printFileContent(const char* file_name)
 	return 0;
 }
 
-char* clean_string(char* str) {
+char* clean_string(const char* str) {
 	
 	char buffer[1024];
 	int buffer_index = 0;
@@ -53,8 +53,9 @@ char* clean_string(char* str) {
 
 	}
 
-	char* clean_str = malloc(buffer_index * sizeof(char));
+	char* clean_str = malloc((buffer_index+1) * sizeof(char));
 	strcpy(clean_str, buffer);
+	clean_str[buffer_index] = (char)0;
 	return clean_str;
 
 }
@@ -63,9 +64,11 @@ static int
 takeVariableFromLine(char *str, char *name, char *data)
 {
 	//char temp[1024];
-
-	char* line = clean_string(str);
 	
+	printf("temizlenmemis %s\n",str);
+	char* line = clean_string(str);
+	printf("temizlendi %s\n",line);
+
 	//strcpy(temp, line);
 
 	char* equals_ptr = strchr(line, '=');
@@ -93,11 +96,11 @@ takeVariableFromLine(char *str, char *name, char *data)
 int
 takeFileContent(const char* file_name, struct data_holder** data_in_file_ptr, int* data_holder_size)
 {
-	char line[256];
+	char line[2048];
 	FILE *config;
 	
-	char name[128];
-	char data[128];
+	char name[512];
+	char data[512];
 
 	int data_index = 0;
 
@@ -106,25 +109,38 @@ takeFileContent(const char* file_name, struct data_holder** data_in_file_ptr, in
 	{
                 while(fgets(line, sizeof(line), config) != NULL)
 		{
-			if (line[0] == '#') {
+			if (line[0] == '#' || strlen(line) < 3) {
 				continue;
 			}
-			else if(takeVariableFromLine(line, name, data) == 0) 
+			
+			printf("line: %s\n", line);
+
+			
+			if(takeVariableFromLine(line, name, data) == 0) 
 			{
+				printf("%d\n", data_index);
+
 				*data_in_file_ptr = realloc(*data_in_file_ptr, (data_index+1) * sizeof(struct data_holder));	
-				
+				printf("buradayim\n");
+
 				struct data_holder* temp_ptr = *data_in_file_ptr + data_index;
-	
+				printf("buradayim 1\n");
+
 				strcpy(temp_ptr->name,name);
+				printf("%s\n", temp_ptr->name);
+
 				strcpy(temp_ptr->data,data);
-					
+				printf("%s\n", temp_ptr->data);
+
+				data_index++;
+
+		
 			} 
 			else 
 			{
-				printf("Error: could not read line %d.", data_index);
+				printf("Error: could not read line %d.\n", data_index);
 			}
 
-			data_index++;
 		}
 
 		*data_holder_size = data_index;
