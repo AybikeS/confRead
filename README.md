@@ -5,6 +5,7 @@ This is a simple library for reading configuration files.
 The formatting of the config file must be as follows per line for the library to function:
 
 data_name: The name by which the data will be searched within the memory.
+
 data_value: The relevant value attached to the name.
 ```
 data_name=data_value
