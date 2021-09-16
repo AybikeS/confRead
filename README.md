@@ -12,6 +12,7 @@ data_name=data_value
 
 ## Additional Features
 To write comments within the config file, make sure that the first character in the line is "#".
+
 To print out the contents of the config file to the shell, call the ```printFileContent()``` function.
 
 ## Install library
@@ -28,17 +29,14 @@ $ make
 $ ./usage_example_lib.out test.conf
 ```
 ## Functions
-Read the data from the config file and make it avaliable in memory.
-```takeFileContent()```
+```takeFileContent()```: Read the data from the config file and make it avaliable in memory.
 
-Search for the given data_name and return the respective value -as int.
-```dataAsInt()```
+```dataAsInt()```: Search for the given data_name and return the respective value -as int.
 
-Search for the given data_name and return the respective value -as string.
-```dataAsStr()```
+```dataAsStr()```: Search for the given data_name and return the respective value -as string.
 
-Search for the given data_name and return the respective value -as float.
-```dataAsFloat()```
+```dataAsFloat()```: Search for the given data_name and return the respective value -as float.
+
 
 ## Credits
 This library was written by Efe Yılmaz, Narin Yaren Coşkun, Aybike Sena Şahin and Ali Yiğit Ergen during their internship at Ford Otosan.
